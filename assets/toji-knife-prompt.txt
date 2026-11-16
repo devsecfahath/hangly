@@ -1,0 +1,7 @@
+Tool: built-in imagegen
+Mode: edit, transparent background
+Reference: user-supplied photograph
+
+Prompt:
+Edit the supplied reference photograph into a realistic transparent-background asset for a hanging browser charm. Preserve the actual dagger design exactly: burgundy red cloth-wrapped straight grip; gold pommel cap; dark circular guard with gold trim; long asymmetric brushed-silver blade with its distinctive one-sided open hook and stepped cutouts. Preserve the long main cutting edge and narrow angled point. Match the proportions and materials of this reference. Do not turn the blade into a trident or add new spikes.
+Remove the gray background and the loose dangling black chain; retain the small chain-attachment ring at the pommel. Straighten the dagger into a vertical front-facing presentation with the handle at the top and blade pointing down, centered on the attachment ring. The whole dagger must fit inside the canvas with clean margins. Preserve photorealistic steel texture, subtle engraved markings, burgundy woven grip, and gold-and-black guard. No text labels, no watermark, no scene, no hands, no stand, and no ground shadow. Output a clean isolated cutout with true transparent alpha.

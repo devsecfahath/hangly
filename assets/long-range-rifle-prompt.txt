@@ -1,0 +1,5 @@
+Tool: built-in imagegen
+Mode: generate, transparent background
+
+Prompt:
+Use case: product-mockup. Create one photorealistic miniature long-range precision rifle as an isolated transparent PNG asset for a hanging browser charm. Side view, entire rifle visible, oriented vertically with buttstock at the top and long slender barrel pointing straight down. Dark graphite metal action and barrel, olive-drab adjustable skeleton stock and fore-end, large recognizable optical scope mounted along the side, small folded bipod near the fore-end, subtle satin steel highlights so it reads clearly on light and dark backgrounds. Realistic crisp manufactured materials and proportions, premium collectible keychain finish, not a cartoon. At the very top center add a small metal hanging ring above the buttstock, the only attachment, centered on the vertical image axis; keep this ring close to the top margin. Whole weapon fits inside canvas with narrow clean margins. Transparent alpha background, no ground plane or cast ground shadow. No loose chain, no sling strap, no ammunition, no person, no hands, no scene, no text, no branding, no watermark. This is decorative artwork only.

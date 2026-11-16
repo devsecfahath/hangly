@@ -1,0 +1,10 @@
+# Test profiles & temporary artifacts
+.browser-test/
+artifacts/
+*.zip
+
+# Operating System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

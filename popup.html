@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Little Hang — Your little corner</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="shared.js" defer></script><script src="stopwatch.js" defer></script><script src="physics.js" defer></script>
+  <script src="builtin-art.js" defer></script><script src="art.js" defer></script><script src="stage.js" defer></script><script src="popup.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span><span>little hang<span class="brand-dot">.</span></span></div>
+    <label class="switch" title="Show charms on websites"><input id="enabled" type="checkbox" aria-label="Show charms on websites" disabled><span></span></label>
+  </header>
+  <main>
+    <div class="intro"><span class="eyebrow">A SMALL THING. A GOOD FEELING.</span><h1>Your little corner.</h1><p>A bit of joy, wherever you browse.</p></div>
+    <section class="preview-card" aria-label="Interactive charm preview">
+      <span class="preview-tag"><i></i> LIVE PREVIEW</span>
+      <div id="preview"></div>
+      <span class="preview-hint">go on, give it a little swing ↗</span>
+      <span class="spark spark-one" aria-hidden="true">✧</span><span class="spark spark-two" aria-hidden="true">✦</span>
+    </section>
+    <section id="stopwatch-panel" class="stopwatch-panel" hidden aria-label="Stopwatch controls">
+      <div><span class="eyebrow">STOPWATCH</span><output id="stopwatch-readout" aria-label="Elapsed time">00:00.0</output></div>
+      <div class="stopwatch-actions"><button id="stopwatch-toggle" type="button">Start</button><button id="stopwatch-reset" type="button">Reset</button></div>
+      <p id="stopwatch-error" role="status" hidden></p>
+    </section>
+    <div class="section-heading"><h2>Pick your companion</h2><span id="charm-name">Daydream</span></div>
+    <div id="charms" class="charm-grid" role="group" aria-label="Charm collection"></div>
+    <div class="upload-row">
+      <label class="upload-button" for="upload"><span aria-hidden="true">＋</span> Make it yours <small>PNG, JPG or WebP</small></label>
+      <input id="upload" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+      <button id="remove-image" class="text-button" hidden>Remove</button>
+    </div>
+    <div class="section-heading rope-heading"><h2>The little details</h2></div>
+    <div class="rope-picker" role="group" aria-label="Rope style">
+      <button data-rope="thread" aria-pressed="true"><span class="rope-swatch thread"></span>Thread</button>
+      <button data-rope="chain" aria-pressed="false"><span class="rope-swatch chain"></span>Chain</button>
+      <button data-rope="neon" aria-pressed="false"><span class="rope-swatch neon"></span>Glow</button>
+    </div>
+    <div class="sliders">
+      <label for="size">Charm size <output id="size-value"></output></label><input id="size" type="range" min="44" max="100">
+      <label for="length">Rope length <output id="length-value"></output></label><input id="length" type="range" min="80" max="260">
+      <label for="anchor">Hang position <output id="anchor-value"></output></label><input id="anchor" type="range" min="8" max="92">
+    </div>
+    <label class="motion-label"><input id="motion" type="checkbox"> Less motion <span>Always follows your system preference</span></label>
+    <p id="status" role="status" aria-live="polite">Loading your little corner…</p>
+  </main>
+  <footer><span>Made for the little moments.</span><button id="reset" class="text-button">Reset appearance</button></footer>
+</body>
+</html>
