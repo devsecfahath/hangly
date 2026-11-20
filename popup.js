@@ -4,8 +4,22 @@
   const stage = NS.createStage($("preview"), { preview: true });
   let settings = { ...NS.defaults }, customImage = null, writeQueue = Promise.resolve(), ready = false, restricted = false;
   let stopwatch = NS.normalizeStopwatch(), stopwatchInterval = 0, stopwatchBusy = false;
+  let overlayUnavailable = false;
   const status = (message, error = false) => { $("status").textContent = message; $("status").classList.toggle("error", error); };
-  const savedMessage = () => restricted ? "Saved. Open a website to see your charm; browser pages don't support charms." : "Saved on this device. Your charm follows you across websites.";
+  const savedMessage = () => restricted ? "Saved. Open a website to see your charm; browser pages don't support charms."
+    : overlayUnavailable ? "Saved. Refresh this tab to see your charm."
+    : "Saved on this device. Your charm follows you across websites.";
+  async function connectOverlay() {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    restricted = !/^https?:/.test(tab?.url || "") || /^https?:\/\/(chromewebstore\.google\.com|microsoftedge\.microsoft\.com)\//.test(tab?.url || "");
+    if (restricted || tab.id === undefined) return;
+    try {
+      if (await chrome.tabs.sendMessage(tab.id, { type: "little-hang-overlay-ready" }, { frameId: 0 })) return;
+    } catch { /* Tabs opened before an extension reload may have no live receiver. */ }
+    const [{ js: files }] = chrome.runtime.getManifest().content_scripts;
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files });
+    overlayUnavailable = !await chrome.tabs.sendMessage(tab.id, { type: "little-hang-overlay-ready" }, { frameId: 0 });
+  }
   function render() {
     $("enabled").checked = settings.enabled;
     $("enabled").disabled = !ready;
@@ -111,13 +125,14 @@
       chrome.storage.onChanged.addListener(stopwatchChanged);
       settings = NS.normalize(result.settings); customImage = NS.validImage(result.customImage) ? result.customImage : null;
       if (settings.charm === "custom" && !customImage) settings.charm = "star";
-      await Promise.allSettled(["toji-knife", "long-range-rifle", "superbike"].map(id => NS.ensureArt(id)));
+      await Promise.allSettled([
+        ...["toji-knife", "long-range-rifle", "superbike"].map(id => NS.ensureArt(id)),
+        connectOverlay().catch(() => { overlayUnavailable = true; })
+      ]);
       ready = true; buildCharms(); render(); stage.nudge();
-      try {
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        restricted = !/^https?:/.test(tab?.url || "") || /^https?:\/\/(chromewebstore\.google\.com|microsoftedge\.microsoft\.com)/.test(tab?.url || "");
-      } catch { /* Settings still work if current-tab details are unavailable. */ }
-      status(restricted ? "Open or refresh a website to meet your charm. Browser pages aren't supported." : "Grab the charm to swing it. Settings stay on this device.");
+      status(restricted ? "Open a website to meet your charm. Browser pages aren't supported."
+        : overlayUnavailable ? "Refresh this tab to reconnect your charm."
+        : "Grab the charm to swing it. Settings stay on this device.");
     } catch { status("Couldn't load your settings. Close and reopen this popup.", true); }
   }
   window.addEventListener("pagehide", () => { stage.destroy(); clearInterval(stopwatchInterval); chrome.storage.onChanged.removeListener(stopwatchChanged); }, { once: true });

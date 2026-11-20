@@ -4,7 +4,9 @@
   "version": "0.1.26",
   "description": "A little personality for your tabs. Swing a charm, pick a rope, or hang your own image.",
   "permissions": [
-    "storage"
+    "storage",
+    "activeTab",
+    "scripting"
   ],
   "action": {
     "default_popup": "popup.html",
