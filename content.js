@@ -1,5 +1,7 @@
 (() => {
   "use strict";
+  if (globalThis.littleHangContentStarted) return;
+  globalThis.littleHangContentStarted = true;
   const NS = globalThis.LittleHang;
   let stage, host, settings, customImage, stopwatch;
   function render() {
@@ -31,11 +33,23 @@
     try {
       const result = await chrome.storage.local.get(["settings", "customImage", "stopwatch"]);
       settings = NS.normalize(result.settings); customImage = result.customImage; stopwatch = NS.normalizeStopwatch(result.stopwatch);
+      // Reloading the extension can leave the previous instance's host in the document.
+      document.querySelectorAll("little-hang-companion").forEach(element => element.remove());
       chrome.storage.onChanged.addListener(changed); render();
-    } catch { /* An extension reload invalidates existing content scripts until this tab is refreshed. */ }
+      chrome.runtime.onMessage.addListener(ping);
+    } catch {
+      delete globalThis.littleHangContentStarted;
+    }
+  }
+  function ping(message, sender, respond) {
+    if (sender.id === chrome.runtime.id && message?.type === "little-hang-overlay-ready") respond(true);
   }
   window.addEventListener("pagehide", event => {
-    if (!event.persisted) { stage?.destroy(); chrome.storage.onChanged.removeListener(changed); }
-  }, { once: true });
-  init();
+    if (!event.persisted) {
+      stage?.destroy();
+      chrome.storage.onChanged.removeListener(changed);
+      chrome.runtime.onMessage.removeListener(ping);
+    }
+  });
+  return init();
 })();

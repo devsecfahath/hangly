@@ -20,16 +20,22 @@
     { id: "glowing-diamond", name: "Glowing diamond", color: "#a6dfff" },
     { id: "toji-knife", name: "Toji knife", color: "#a8c0cc" },
     { id: "long-range-rifle", name: "Long-range rifle", color: "#7b8054" },
-    { id: "superbike", name: "Superbike", color: "#e4313b" }
+    { id: "superbike", name: "Superbike", color: "#e4313b" },
+    { id: "doctor-doom", name: "Doctor Doom", color: "#68b879" },
+    { id: "iron-man-mask", name: "Iron Man MK85 Suit", color: "#c9463b" },
+    { id: "venom", name: "Venom", color: "#566479" },
+    { id: "doctor-strange", name: "Doctor Strange", color: "#db7842" }
   ];
   const defaults = Object.freeze({ enabled: true, charm: "star", rope: "thread", size: 68, length: 150, anchor: 82, motion: "system" });
   const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
   function normalize(raw = {}) {
     if (!raw || typeof raw !== "object") raw = {};
+    const charm = ["batman-symbol", "thanos", "ghost-rider", "green-lantern", "superman"].includes(raw.charm) ? "venom"
+      : raw.charm === "superman-symbol" ? "doctor-strange" : raw.charm;
     const number = (key, min, max) => Number.isFinite(raw[key]) ? clamp(raw[key], min, max) : defaults[key];
     return {
       enabled: typeof raw.enabled === "boolean" ? raw.enabled : defaults.enabled,
-      charm: [...charms.map(c => c.id), "custom"].includes(raw.charm) ? raw.charm : defaults.charm,
+      charm: [...charms.map(c => c.id), "custom"].includes(charm) ? charm : defaults.charm,
       rope: ["thread", "chain", "neon"].includes(raw.rope) ? raw.rope : defaults.rope,
       size: number("size", 44, 100), length: number("length", 80, 260), anchor: number("anchor", 8, 92),
       motion: ["system", "reduced"].includes(raw.motion) ? raw.motion : defaults.motion

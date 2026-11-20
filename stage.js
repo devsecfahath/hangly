@@ -55,7 +55,8 @@
     let frame = 0, previous = 0, pointer = null, draggedAt = 0, offset = { x: 0, y: 0 }, destroyed = false;
     let anchorPointer = null, anchorGrabOffset = 0, anchorOriginal = settings.anchor, anchorRevision = 0;
     const reduced = () => settings.motion === "reduced" || media.matches;
-    const animated = () => ["thor-hammer", "naruto-rasenshuriken", "gojo-purple", "madara", "kitt", "glowing-diamond", "superbike"].includes(settings.charm) && !reduced();
+    const animated = () => ["thor-hammer", "naruto-rasenshuriken", "gojo-purple", "madara", "kitt", "glowing-diamond", "superbike",
+      "doctor-doom", "iron-man-mask", "venom", "doctor-strange"].includes(settings.charm) && !reduced();
     const clockRunning = () => settings.charm === "stopwatch" && stopwatch.startedAt !== null;
     function geometry() {
       const size = Math.min(settings.size, Math.max(24, width - 20),
@@ -64,7 +65,8 @@
       const anchor = preview ? width / 2 : NS.clamp(width * settings.anchor / 100, margin, Math.max(margin, width - margin));
       const pivotY = 24;
       const mounts = { star: 0.46, moon: 0.44, sprout: 0.48, ghost: 0.41, heart: 0.4,
-        spiderman: 0.44, "spiderman-full": 0.43, "thor-hammer": 0.46, "captain-shield": 0.485, madara: 0.5, "naruto-rasenshuriken": 0.45, "eren-titan": 0.48, "gojo-purple": 0.49, kitt: 0.4, stopwatch: 0.492, "cpts-certificate": 0.41, "glowing-diamond": 0.44, "toji-knife": 0.495, "long-range-rifle": 0.57, superbike: 0.30, custom: 0.44 };
+        spiderman: 0.44, "spiderman-full": 0.43, "thor-hammer": 0.46, "captain-shield": 0.485, madara: 0.5, "naruto-rasenshuriken": 0.45, "eren-titan": 0.48, "gojo-purple": 0.49, kitt: 0.4, stopwatch: 0.492, "cpts-certificate": 0.41, "glowing-diamond": 0.44, "toji-knife": 0.495, "long-range-rifle": 0.57, superbike: 0.30, custom: 0.44,
+        "doctor-doom": 0.49, "iron-man-mask": 0.49, venom: 0.49, "doctor-strange": 0.49 };
       const attachment = size * (mounts[settings.charm] || 0.46);
       // Simulate the chain end at the hanging point; the charm hangs below its joint.
       const bottomMargin = settings.charm === "stopwatch" && !preview ? Math.max(margin, size * 0.43 + 32) : margin;
